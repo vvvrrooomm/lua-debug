@@ -86,6 +86,12 @@ return function (param)
         server = assert(net.listen(t.protocol, t.address, t.port))
         function server:on_accepted(new_s)
             return init_session(new_s)
+            local ok = init_session(s)
+            assert(ok)
+            if writebuf ~= '' then
+                s:write(writebuf)
+                writebuf = ''
+            end
         end
     else
         return
